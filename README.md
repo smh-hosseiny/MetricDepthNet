@@ -1,30 +1,21 @@
 # **ZeroShotDepth**
 
-## **Zero-shot Metric Depth Estimation Using UniDepth, DepthAnythin, and DepthPro**
+## **Zero-shot Metric Depth Estimation Using UniDepth, DepthAnything, and DepthPro**
 
-This project implements a **zero-shot metric depth estimation model** using a combination of different components. The model leverages **UniDepth** as the base architecture, **DepthAnythin** for training code, and the **DepthPro** loss function for enhanced accuracy in depth predictions. It has been trained on **four public datasets** to perform robust zero-shot depth estimation across different environments.
+This project implements a **zero-shot metric depth estimation model** using a combination of different components. The model leverages **UniDepth** as the base architecture, **DepthAnything** for training pipeline, and the **DepthPro** loss function for enhanced accuracy in depth predictions. It has been trained on **four datasets** to perform robust zero-shot depth estimation across different environments.
 
-## **Key Features**
-
-- **Zero-shot learning:** The model doesn't require any fine-tuning on new datasets, making it versatile across different tasks and environments.
-- **Metric depth estimation:** Unlike relative depth estimation, this model predicts **real-world distances** (metric depth).
-- **Trained on diverse public datasets:** By training on multiple public datasets, the model generalizes well to new scenarios and performs robustly in various applications.
 
 ## **Components**
 
-- **Base Model:** [UniDepth]([https://unidepth.example.com](https://github.com/lpiccinelli-eth/UniDepth)) - a state-of-the-art depth estimation model that serves as the foundation of this project.
-- **Training Code:** Adapted from [DepthAnything]([https://depthanythin.example.com](https://github.com/DepthAnything/Depth-Anything-V2/tree/main/metric_depth)) for scalable and efficient training across large datasets.
-- **Loss Function:** Derived from [DepthPro]([https://depthpro.example.com](https://github.com/apple/ml-depth-pro)), the loss function is designed to maximize accuracy in depth predictions.
+- **Base Model:** [UniDepth](https://github.com/lpiccinelli-eth/UniDepth) - a state-of-the-art depth estimation model that serves as the foundation of this project.
+- **Training Code:** Adapted from [DepthAnything](https://github.com/DepthAnything/Depth-Anything-V2/tree/main/metric_depth) for scalable and efficient training across large datasets.
+- **Loss Function:** Derived from [DepthPro](https://github.com/apple/ml-depth-pro), the gradient loss function is designed to produce sharp details in the depth map.
+
 
 ## **Model Overview**
 
-This project brings together the strengths of three powerful components:
-
-1. **UniDepth** is known for its flexibility and capability in depth estimation tasks.
-2. **DepthAnything's** training pipeline ensures the model can handle various datasets and large-scale training efficiently.
-3. **DepthPro's** loss function optimizes the model’s ability to make precise metric depth predictions.
-
-The resulting model is capable of predicting **real-world metric depth** without requiring any additional training on new datasets, making it suitable for a wide range of applications.
+This project brings together the strengths of three powerful components.
+The resulting model is capable of predicting **monocular zero shot metric depth** without requiring any additional information.
 
 
 
