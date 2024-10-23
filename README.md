@@ -24,7 +24,7 @@ The resulting model is capable of predicting **monocular zero shot metric depth*
 
 ### **Download Model Checkpoint**
 
-You can download the pre-trained model checkpoint required for inference from [here](https://www.dropbox.com/scl/fi/qokq7nsxa0x8b3alrypjd/latest.pth?rlkey=qi8cxfqf3oib1zx57vs2agal6&st=i9q5qsge&dl=0).
+You can download the pre-trained model checkpoint required for inference from [here](https://www.dropbox.com/scl/fi/aw2598t53kwone9au6c7r/latest.pth?rlkey=rzig6c7c4gcay1ve4g1v3ypxr&st=7myvphu6&dl=0).
 
 *Make sure to place the downloaded checkpoint file in the `checkpoint/` directory.*
 
