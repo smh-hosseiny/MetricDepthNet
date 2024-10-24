@@ -23,13 +23,13 @@ from unidepth.models import UniDepthV2
 from util.dist_helper import setup_distributed
 from util.loss import DepthLoss
 from util.metric import eval_depth
-from util.utils import init_log
+from util.utils import init_log, tuple_type
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Depth Anything V2 for Metric Depth Estimation')
     parser.add_argument('--encoder', default='vitl', choices=['vits', 'vitb', 'vitl', 'vitg'])
     parser.add_argument('--dataset', default="hypersim,vkitti,nyu,syns")
-    parser.add_argument('--img-size', default=476, type=int)
+    parser.add_argument('--img-size', type=tuple_type, default=(476, 616), help='Image size (height,width)')
     parser.add_argument('--min-depth', default=0.01, type=float)
     parser.add_argument('--max-depth', default=80, type=float)
     parser.add_argument('--epochs', default=40, type=int)
@@ -103,15 +103,17 @@ def load_datasets(args, size):
 
 def load_model(args, config, local_rank):
     model = UniDepthV2(config)
-    # model = UniDepthV2.from_pretrained("lpiccinelli/unidepth-v2-vits14")
-    if args.pretrained_from:
-        model.load_state_dict(torch.load(args.pretrained_from, map_location='cpu')['model'], strict=True)
+    model = UniDepthV2.from_pretrained("lpiccinelli/unidepth-v2-vits14")
+    # if args.pretrained_from:
+        # model.load_state_dict(torch.load(args.pretrained_from, map_location='cpu')['model'], strict=True)
 
     model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
     model.cuda(local_rank)
     model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[local_rank], broadcast_buffers=False,
                                                       output_device=local_rank, find_unused_parameters=True)
     return model
+
+
 
 def main():
     args = parse_args()
@@ -122,7 +124,7 @@ def main():
     rank, world_size = setup_distributed(port=args.port)
     logger, writer = create_logger(args.save_path, rank)
 
-    if rank == 0:
+    if rank == 0: 
         all_args = {**vars(args), 'ngpus': world_size}
         logger.info('{}\n'.format(pprint.pformat(all_args)))
     

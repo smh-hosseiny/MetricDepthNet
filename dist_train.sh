@@ -4,17 +4,16 @@ port=$(shuf -i 1024-49151 -n 1)
 
 current_time=$(date "+%Y-%m-%d_%H")
 
-epoch=4
+epoch=5
 bs=8
-gpus=1
-lr=1.28e-6
+gpus=2
+lr=1.e-6
 
 encoder=vitl
 dataset="hypersim,vkitti,nyu,syns"
-img_size=462
+img_size=(462,616)
 min_depth=0.01
-max_depth=100 # 80 for virtual kitti
-
+max_depth=100 #meters
 pretrained_from=./checkpoint/latest.pth
 save_path=exp/${current_time}
 

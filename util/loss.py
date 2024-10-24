@@ -21,9 +21,9 @@ class DepthLoss(nn.Module):
         self.use_laplacian = use_laplacian
         self.include_abs_rel = include_abs_rel
 
-        self.num_scales = 2 # M = 2
+        self.num_scales = 6
 
-        self.lambd = 0.5
+        self.lambd = 0.8
 
 
 
@@ -46,8 +46,8 @@ class DepthLoss(nn.Module):
 
         # Prevent negative or zero values to avoid NaNs
         eps = 1e-6
-        C_pred = torch.clamp(C_pred, min=eps)
-        C_gt = torch.clamp(C_gt, min=eps)
+        C_pred = torch.clamp(1/C_pred, min=eps, max=100)
+        C_gt = torch.clamp(1/C_gt, min=eps, max=100)
 
 
         # Apply valid mask
@@ -68,17 +68,27 @@ class DepthLoss(nn.Module):
 
         # ===== 1. Depth Loss =====
         if self.is_metric:
-            # Mean Absolute Error (MAE) Loss for metric datasets
-            abs_diff = torch.abs(C_pred - C_gt)  # [B, 1, H, W]            
+            # Mean Absolute Error (MAE) Loss for metric datasets, discarding top 20% of errors
+            abs_diff = torch.abs(C_pred - C_gt)  # [B, 1, H, W]
             B = abs_diff.shape[0]
-           
-            # Discard pixels with error in the top 20% per image for real-world datasets           
+            
             loss_MAE = 0.0
             for b in range(B):
-                valid_abs_diff = abs_diff[b][valid_mask[b]]
-                if valid_abs_diff.numel() == 0:
-                    continue
-                loss_MAE += valid_abs_diff.mean()
+                valid_diff = abs_diff[b][valid_mask[b]]  # Shape: [N]
+                N = valid_diff.numel()
+                # Determine the number of top errors to discard (20% of N)
+                # k = max(int(0.2 * N), 1)                       
+                # # Sort the valid differences in ascending order
+                # sorted_diff, _ = torch.sort(valid_diff)
+                # filtered_diff = sorted_diff[:N - k]
+                filtered_diff = valid_diff
+                
+                if filtered_diff.numel() == 0:
+                    continue  
+                
+                loss_MAE += filtered_diff.mean()
+            
+            # Average the loss over the batch
             loss_MAE /= B
             
 
@@ -154,13 +164,11 @@ class DepthLoss(nn.Module):
 
 
         # Define weights
-        alpha = 0.5   # Weight for MAE
-        beta = 0.1  # Weight for SiLog Loss
-        gamma = 0.05   # Weight for Derivative Loss
-        delta = 1   # Weight for Absolute Relative Error Loss
+        alpha = 1  # Weight for MAE
+        beta = 0  # Weight for SiLog Loss
+        gamma = 0.01 # Weight for Derivative Loss
 
-        # Compute total loss
         # print(f"SiLog Loss: {silog_loss.item()}, MAE Loss: {loss_MAE.item()}, Derivative Loss: {loss_derivatives.item()}, AbsRel Loss: {abs_rel_loss.item()}")
-        loss = alpha * loss_MAE + beta * silog_loss + gamma * loss_derivatives + delta * abs_rel_loss
+        loss = alpha * loss_MAE + beta * silog_loss + gamma * loss_derivatives 
 
         return loss

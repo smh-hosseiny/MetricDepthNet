@@ -2,6 +2,8 @@ import os
 import re
 import numpy as np
 import logging
+import argparse
+import ast
 
 logs = set()
 
@@ -24,3 +26,11 @@ def init_log(name, level=logging.INFO):
     ch.setFormatter(formatter)
     logger.addHandler(ch)
     return logger
+
+
+def tuple_type(string):
+    try:
+        return ast.literal_eval(string)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"'{string}' is not a valid tuple")
+
