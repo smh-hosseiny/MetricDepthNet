@@ -5,6 +5,9 @@
 This project implements a **zero-shot metric depth estimation model** using a combination of different components. The model leverages **UniDepth** as the base architecture, **DepthAnything** for training pipeline, and the **DepthPro** loss function for enhanced accuracy in depth predictions. It has been trained on **four datasets** to perform robust zero-shot depth estimation across different environments.
 
 
+--------------------------------------------
+
+
 ## **Components**
 
 - **Base Model:** [UniDepth](https://github.com/lpiccinelli-eth/UniDepth) - a state-of-the-art depth estimation model that serves as the foundation of this project.
@@ -19,47 +22,66 @@ The resulting model is capable of predicting **monocular zero shot metric depth*
 
 
 
+--------------------------------------------
+
 
 ## **Usage Instructions**
 
-### **Download Model Checkpoint**
+### **1. Download Model Checkpoint**
 
 You can download the pre-trained model checkpoint required for inference from [here](https://www.dropbox.com/scl/fi/aw2598t53kwone9au6c7r/latest.pth?rlkey=rzig6c7c4gcay1ve4g1v3ypxr&st=7myvphu6&dl=0).
 
 *Make sure to place the downloaded checkpoint file in the `checkpoint/` directory.*
 
 
-To use this model, follow these instructions:
 
-### **Running Inference**
+### **2. Clone the Repository and Set Up the Environment**:
+1. Clone the Repository:
+```bash
+git clone https://github.com/yourusername/ZeroShotDepth.git
+cd ZeroShotDepth
+```
+2. Create and Activate the Environment:
+```bash
+conda create -n MetricDepthNet python=3.11
+conda activate MetricDepthNet
+```
+3. Install Required Dependencies:
 
-1. Clone the repository:
+```bash
+pip install -r requirements.txt 
+```
 
-   ```bash
-   export NAME=MetricDepthNet
-   
-   git clone https://github.com/yourusername/ZeroShotDepth.git
-   cd ZeroShotDepth
-   conda create -n $NAME python=3.11
-   conda activate $NAME
-   pip install -r requirements.txt
-   ```
-2. Run the model:
+### **3. Running Inference**:
+Option 1: Command-Line Inference
 
-   ```bash
-   python run.py --load-from checkpoint/latest.pth --max-depth 100 --img-path vis_depth/frame_02.jpg 
-   ```
+Infer depth of a specific image:
+```bash
+python run.py --load-from checkpoint/latest.pth --max-depth 100 --img-path vis_depth/frame_02.jpg
+```
+
+Option 2: Using the Gradio Interface
+
+To use the Gradio interface:
+ ```bash
+python app.py
+```
+Open the provided local URL in your web browser to interact with the model.
 
 
+--------------------------------------------
 
-### **Training**
-
+## **Training**
 1. Prepare the datasets and configs
 2. Run the training scrpts:
 3. 
    ```bash
    bash dist_train.sh 
    ```
+
+
+--------------------------------------------
+
 
 
 ## **Results**
