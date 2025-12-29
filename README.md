@@ -11,7 +11,7 @@
 
 <!-- Teaser Prediction Video -->
 <p align="center">
-  <video src="assets/demo2.mp4"
+  <video src="https://github.com/user-attachments/assets/971e3c8b-b200-4f05-97d8-e1ad675c9421"
          controls
          muted
          autoplay
