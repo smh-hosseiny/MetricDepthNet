@@ -1,5 +1,27 @@
 # **ZeroShotDepth**
 
+
+![UniDepth](https://img.shields.io/badge/Base-UniDepth-blue)
+![DepthAnything](https://img.shields.io/badge/Training-DepthAnything-green)
+![DepthPro](https://img.shields.io/badge/Loss-DepthPro-purple)
+![Zero--Shot](https://img.shields.io/badge/Setting-Zero--Shot-orange)
+![Metric Depth](https://img.shields.io/badge/Output-Metric_Depth-red)
+![PyTorch](https://img.shields.io/badge/Framework-PyTorch-lightgrey)
+![Gradio](https://img.shields.io/badge/UI-Gradio-orange)
+
+<!-- Teaser Prediction Video -->
+<p align="center">
+  <video src="assets/demo2.mp4"
+         controls
+         muted
+         autoplay
+         loop
+         width="75%">
+    Your browser does not support the video tag.
+  </video>
+</p>
+
+
 ## **Zero-shot Metric Depth Estimation Using UniDepth, DepthAnything, and DepthPro**
 
 This project implements a **zero-shot metric depth estimation model** using a combination of different components. The model leverages **UniDepth** as the base architecture, **DepthAnything** for training pipeline, and the **DepthPro** loss function for enhanced accuracy in depth predictions. It has been trained on **four datasets** to perform robust zero-shot depth estimation across different environments.
@@ -7,20 +29,16 @@ This project implements a **zero-shot metric depth estimation model** using a co
 
 --------------------------------------------
 
-
 ## **Components**
 
-- **Base Model:** [UniDepth](https://github.com/lpiccinelli-eth/UniDepth) - a state-of-the-art depth estimation model that serves as the foundation of this project.
-- **Training Code:** Adapted from [DepthAnything](https://github.com/DepthAnything/Depth-Anything-V2/tree/main/metric_depth) for scalable and efficient training across large datasets.
-- **Loss Function:** Derived from [DepthPro](https://github.com/apple/ml-depth-pro), the gradient loss function is designed to produce sharp details in the depth map.
+- **Base Model:** [UniDepth](https://github.com/lpiccinelli-eth/UniDepth) — a state-of-the-art architecture for monocular depth estimation.
+- **Training Pipeline:** Adapted from [DepthAnything](https://github.com/DepthAnything/Depth-Anything-V2/tree/main/metric_depth) for scalable multi-dataset training.
+- **Loss Function:** Based on [DepthPro](https://github.com/apple/ml-depth-pro), using gradient-based supervision to preserve sharp geometric details.
 
 
 ## **Model Overview**
 
-This project brings together the strengths of three powerful components.
-The resulting model is capable of predicting **monocular zero shot metric depth** without requiring any additional information.
-
-
+By integrating these three components, the model predicts **zero-shot metric depth from a single RGB image**, without requiring camera intrinsics or scene-specific calibration.
 
 --------------------------------------------
 
@@ -38,8 +56,8 @@ You can download the pre-trained model checkpoint required for inference from [h
 ### **2. Clone the Repository and Set Up the Environment**:
 1. Clone the Repository:
 ```bash
-git clone https://github.com/yourusername/ZeroShotDepth.git
-cd ZeroShotDepth
+git clone https://github.com/smh-hosseiny/MetricDepthNet.git
+cd MetricDepthNet
 ```
 2. Create and Activate the Environment:
 ```bash
@@ -70,27 +88,20 @@ Open the provided local URL in your web browser to interact with the model.
 
 
 --------------------------------------------
-
 ## **Training**
-1. Prepare the datasets and configs
-2. Run the training scrpts:
-3. 
-   ```bash
-   bash dist_train.sh 
-   ```
-
-
+1. Prepare the datasets and configuration files.
+2. Run distributed training:
+```bash
+bash dist_train.sh
+```
 --------------------------------------------
-
 
 
 ## **Results**
 
-Below are examples of an input RGB image and its corresponding predicted depth map:
+Examples of an input RGB image and its corresponding predicted metric depth map:
 
-![Input RGB Image](rgb_depth_comparison.png)
-
-
+![RGB–Depth Comparison](assets/rgb_depth_comparison.png)
 
 
 
