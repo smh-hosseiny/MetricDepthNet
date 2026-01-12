@@ -11,14 +11,7 @@
 
 <!-- Teaser Prediction Video -->
 <p align="center">
-  <video src="https://github.com/user-attachments/assets/971e3c8b-b200-4f05-97d8-e1ad675c9421"
-         controls
-         muted
-         autoplay
-         loop
-         width="75%">
-    Your browser does not support the video tag.
-  </video>
+  <img src="assets/demo.gif" width="75%" />
 </p>
 
 
